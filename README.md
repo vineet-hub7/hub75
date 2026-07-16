@@ -62,18 +62,27 @@ Verified passing: **8×8/BPP4**, **16×16/BPP4**, **32×16/BPP2**, **64×32/BPP4
 
 ## Waveforms
 
-`make wave` runs the sim and opens `sim/tb_hub75.vcd` in GTKWave. Save
-screenshots into [`images/`](images/) and link them here, e.g.:
+Captured in GTKWave from `sim/tb_hub75.vcd` (`make wave`). Signals shown:
+`hub_clk` (shift clock), `hub_rgb[5:0]` (colour bits), `hub_lat` (latch),
+`hub_addr` (row select), `hub_oe_n` (LEDs lit when low).
 
-```markdown
-![Simulation PASS](images/sim_pass.png)
-![Shift + latch timing](images/waveform_shift.png)
+**One row shifted out and latched** — 8 pixels clocked in on `hub_clk`, then a `hub_lat` pulse; matches the source image bit-for-bit (`09,01,21,11,…`).
+![Shift and latch of one row](images/waveform_shift.png)
+
+**Row advancing (row 0 → row 1)** — `hub_addr` updates at the latch and holds stable while the next row shifts.
+![Row advance](images/waveform_row_advance.png)
+
+**Row-address scan** — `hub_addr` sweeps `01 → 10 → 11`, driving every row of the panel within a bit-plane.
+![Row-address scan](images/waveform_row_scan.png)
+
+**Bit-plane wrap (plane 0 → plane 1)** — after row 3, `hub_addr` wraps to `00` and `hub_oe_n` starts staying low longer (BCM weight 1 → 2).
+![Bit-plane wrap](images/waveform_plane_wrap.png)
+
+**Plane-1 scan** — the same row sweep repeats with a visibly wider `hub_oe_n` lit-time (weight 2).
+![Plane-1 scan](images/waveform_plane1_scan.png)
+
+**Full BCM staircase** — zoomed out: each `hub_addr` sweep is one bit-plane, and the `hub_oe_n` lit-time doubles per plane (1 → 2 → 4 → 8 clocks) — that is the 4-bit colour depth.
 ![BCM bit-plane weighting](images/waveform_bcm.png)
-```
-
-Signals worth viewing: `hub_clk` (shift clock), `hub_rgb[5:0]` (colour bits),
-`hub_lat` (latch strobe), `hub_addr` (row select), `hub_oe_n` (lit = low).
-The `images/` folder is empty — add your captured screenshots there.
 
 ---
 
