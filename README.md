@@ -139,5 +139,7 @@ Generate Bitstream. Pixel data would come from the ESP32-S3 by wiring
 ## References
 
 https://zbotic.in/hub75-rgb-panel-with-esp32-led-matrix-video-wall-build/
+
 https://www.instructables.com/PiMatrixOS-Raspberry-Pi-HUB75-LED-Matrix-Platform-/
+
 https://esphome.io/components/display/hub75/
