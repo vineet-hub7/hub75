@@ -1,4 +1,4 @@
-# Parameterised HUB75 driver for Shrike-fi (Renesas SLG47910V ForgeFPGA)
+# HUB75
 
 A scalable HUB75 RGB-LED-matrix controller written in Verilog for the Vicharak
 **Shrike-fi** board (Renesas SLG47910V ForgeFPGA). **One ForgeFPGA drives one
